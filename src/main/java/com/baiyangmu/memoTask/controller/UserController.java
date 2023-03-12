@@ -1,7 +1,10 @@
 package com.baiyangmu.memotask.controller;
 
+import com.baiyangmu.memotask.condition.UserQueryCondition;
 import com.baiyangmu.memotask.entity.User;
 import com.baiyangmu.memotask.service.UserService;
+import com.baiyangmu.memotask.vo.Response;
+import com.baiyangmu.memotask.vo.UserVo;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
@@ -57,6 +60,29 @@ public class UserController {
     public ResponseEntity<User> add(User user) {
         return ResponseEntity.ok(this.userService.insert(user));
     }
+
+
+    /**
+     * 注册用户
+     *
+     * @param user 实体
+     * @return 新增结果
+     */
+    @PostMapping("/registeredUser")
+    public ResponseEntity<Response<UserVo>> registeredUser(@RequestBody UserVo user) {
+        return ResponseEntity.ok(this.userService.registeredUser(user));
+    }
+
+
+    /**
+     * 登录
+     */
+    @PostMapping("login")
+    public ResponseEntity<Response<String>> login(@RequestBody UserQueryCondition condition){
+
+        return ResponseEntity.ok(this.userService.login(condition));
+    }
+
 
     /**
      * 编辑数据

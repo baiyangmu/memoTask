@@ -1,6 +1,9 @@
 package com.baiyangmu.memotask.service;
 
+import com.baiyangmu.memotask.condition.UserQueryCondition;
 import com.baiyangmu.memotask.entity.User;
+import com.baiyangmu.memotask.vo.Response;
+import com.baiyangmu.memotask.vo.UserVo;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 
@@ -53,4 +56,9 @@ public interface UserService {
      */
     boolean deleteById(Integer userId);
 
+    Response<UserVo> registeredUser(UserVo user);
+
+    Response<String> login(UserQueryCondition condition);
+
+    UserVo findByEmail(String email);
 }

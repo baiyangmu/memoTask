@@ -1,5 +1,8 @@
 package com.baiyangmu.memotask.entity;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Data;
+
 import java.util.Date;
 import java.io.Serializable;
 
@@ -9,97 +12,44 @@ import java.io.Serializable;
  * @author makejava
  * @since 2023-03-11 15:46:52
  */
+@Data
 public class User implements Serializable {
     private static final long serialVersionUID = 482929675070889787L;
     /**
      * 用户ID
      */
+    @JsonProperty("user_id")
     private Integer userId;
     /**
      * 用户名
      */
+    @JsonProperty("user_name")
     private String username;
     /**
      * 用户邮箱
      */
+    @JsonProperty("email")
     private String email;
     /**
      * 用户密码
      */
     private String password;
-    
+
+
+    private String salt;
+
+
+    @JsonProperty("created_by")
     private Integer createdBy;
-    
+
+    @JsonProperty("creation_date")
     private Date creationDate;
-    
+
+    @JsonProperty("last_updated_by")
     private Integer lastUpdatedBy;
-    
+
+    @JsonProperty("last_update_date")
     private Date lastUpdateDate;
-
-
-    public Integer getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Integer userId) {
-        this.userId = userId;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public Integer getCreatedBy() {
-        return createdBy;
-    }
-
-    public void setCreatedBy(Integer createdBy) {
-        this.createdBy = createdBy;
-    }
-
-    public Date getCreationDate() {
-        return creationDate;
-    }
-
-    public void setCreationDate(Date creationDate) {
-        this.creationDate = creationDate;
-    }
-
-    public Integer getLastUpdatedBy() {
-        return lastUpdatedBy;
-    }
-
-    public void setLastUpdatedBy(Integer lastUpdatedBy) {
-        this.lastUpdatedBy = lastUpdatedBy;
-    }
-
-    public Date getLastUpdateDate() {
-        return lastUpdateDate;
-    }
-
-    public void setLastUpdateDate(Date lastUpdateDate) {
-        this.lastUpdateDate = lastUpdateDate;
-    }
 
 }
 

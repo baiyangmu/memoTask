@@ -1,8 +1,10 @@
 package com.baiyangmu.memotask.dao;
 
 import com.baiyangmu.memotask.entity.User;
+import com.baiyangmu.memotask.vo.UserVo;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.mapstruct.factory.Mappers;
 import org.springframework.data.domain.Pageable;
 import java.util.List;
 
@@ -80,6 +82,8 @@ public interface UserDao {
      * @return 影响行数
      */
     int deleteById(Integer userId);
+
+    User findByEmail(String email);
 
 }
 
