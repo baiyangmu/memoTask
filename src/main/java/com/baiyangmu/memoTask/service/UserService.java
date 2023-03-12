@@ -61,4 +61,6 @@ public interface UserService {
     Response<String> login(UserQueryCondition condition);
 
     UserVo findByEmail(String email);
+
+    Response<String> logout();
 }

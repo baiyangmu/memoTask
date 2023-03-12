@@ -4,13 +4,11 @@ import com.baiyangmu.memotask.service.UserService;
 import com.baiyangmu.memotask.util.JwtTokenUtil;
 import com.baiyangmu.memotask.util.RedisUtil;
 import com.baiyangmu.memotask.vo.UserVo;
-import io.jsonwebtoken.ExpiredJwtException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import static org.springframework.http.HttpStatus.UNAUTHORIZED;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;

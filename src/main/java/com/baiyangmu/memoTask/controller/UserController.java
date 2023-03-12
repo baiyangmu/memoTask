@@ -85,6 +85,17 @@ public class UserController {
 
 
     /**
+     * 登出
+     */
+    @GetMapping("logout")
+    public ResponseEntity<Response<String>> logout(){
+
+        return ResponseEntity.ok(this.userService.logout());
+    }
+
+
+
+    /**
      * 编辑数据
      *
      * @param user 实体
