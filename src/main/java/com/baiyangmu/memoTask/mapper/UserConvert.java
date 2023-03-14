@@ -1,6 +1,6 @@
 package com.baiyangmu.memotask.mapper;
 
-import com.baiyangmu.memotask.entity.User;
+import com.baiyangmu.memotask.entity.masterData.User;
 import com.baiyangmu.memotask.vo.UserVo;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;

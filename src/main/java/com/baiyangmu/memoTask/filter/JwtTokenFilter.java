@@ -1,6 +1,6 @@
 package com.baiyangmu.memotask.filter;
 
-import com.baiyangmu.memotask.service.UserService;
+import com.baiyangmu.memotask.service.masterData.UserService;
 import com.baiyangmu.memotask.util.JwtTokenUtil;
 import com.baiyangmu.memotask.util.RedisUtil;
 import com.baiyangmu.memotask.vo.UserVo;
