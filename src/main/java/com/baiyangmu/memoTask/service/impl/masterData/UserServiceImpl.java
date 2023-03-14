@@ -138,12 +138,8 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public UserVo findByEmail(String email) {
-        User user = userDao.findByEmail(email);
-        if(user != null){
-            return UserConvert.USER_VO_INSTANCE.toUserDTO(user);
-        }
-        return null;
+    public User findByEmail(String email) {
+        return userDao.findByEmail(email);
     }
 
 

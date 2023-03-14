@@ -54,7 +54,7 @@ public class MemoController {
      * @return 新增结果
      */
     @PostMapping
-    public ResponseEntity<Memo> add(Memo memo) {
+    public ResponseEntity<Memo> add(@RequestBody Memo memo) {
         return ResponseEntity.ok(this.memoService.insert(memo));
     }
 
@@ -64,8 +64,8 @@ public class MemoController {
      * @param memo 实体
      * @return 编辑结果
      */
-    @PutMapping
-    public ResponseEntity<Memo> edit(Memo memo) {
+    @PutMapping()
+    public ResponseEntity<Memo> edit(@RequestBody Memo memo) {
         return ResponseEntity.ok(this.memoService.update(memo));
     }
 
@@ -75,8 +75,8 @@ public class MemoController {
      * @param id 主键
      * @return 删除是否成功
      */
-    @DeleteMapping
-    public ResponseEntity<Boolean> deleteById(Integer id) {
+    @DeleteMapping("{id}")
+    public ResponseEntity<Boolean> deleteById(@PathVariable("id") Integer id) {
         return ResponseEntity.ok(this.memoService.deleteById(id));
     }
 

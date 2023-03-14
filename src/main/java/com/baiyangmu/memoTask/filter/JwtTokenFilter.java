@@ -1,14 +1,13 @@
 package com.baiyangmu.memotask.filter;
 
+import com.baiyangmu.memotask.entity.masterData.User;
 import com.baiyangmu.memotask.service.masterData.UserService;
 import com.baiyangmu.memotask.util.JwtTokenUtil;
 import com.baiyangmu.memotask.util.RedisUtil;
-import com.baiyangmu.memotask.vo.UserVo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
-
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -75,9 +74,12 @@ public class JwtTokenFilter extends OncePerRequestFilter {
         }
 
 
-        UserVo userVo = service.findByEmail(email);
-        if (userVo != null) {
-            request.setAttribute("user", userVo);
+        User user = service.findByEmail(email);
+        if (user != null) {
+            request.setAttribute("user", user);
+        }else{
+            response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Invalid token");
+            return;
         }
 
         filterChain.doFilter(request, response);

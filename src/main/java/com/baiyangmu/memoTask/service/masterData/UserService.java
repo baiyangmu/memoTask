@@ -60,7 +60,7 @@ public interface UserService {
 
     Response<String> login(UserQueryCondition condition);
 
-    UserVo findByEmail(String email);
+    User findByEmail(String email);
 
     Response<String> logout();
 }
