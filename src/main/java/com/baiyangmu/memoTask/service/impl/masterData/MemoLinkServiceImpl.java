@@ -1,7 +1,9 @@
 package com.baiyangmu.memotask.service.impl.masterData;
 
+import com.baiyangmu.memotask.config.UserContext;
 import com.baiyangmu.memotask.entity.masterData.MemoLink;
 import com.baiyangmu.memotask.dao.masterData.MemoLinkDao;
+import com.baiyangmu.memotask.entity.masterData.User;
 import com.baiyangmu.memotask.service.masterData.MemoLinkService;
 import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Page;
@@ -9,6 +11,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 
 import javax.annotation.Resource;
+import java.util.Date;
 
 /**
  * 备忘录关联表(MemoLink)表服务实现类
@@ -53,6 +56,13 @@ public class MemoLinkServiceImpl implements MemoLinkService {
      */
     @Override
     public MemoLink insert(MemoLink memoLink) {
+
+        User user = UserContext.getUser();
+        memoLink.setCreatedBy(user.getUserId());
+        memoLink.setLastUpdatedBy(user.getUserId());
+        memoLink.setCreationDate(new Date(System.currentTimeMillis()));
+        memoLink.setLastUpdateDate(new Date(System.currentTimeMillis()));
+
         this.memoLinkDao.insert(memoLink);
         return memoLink;
     }
@@ -65,6 +75,9 @@ public class MemoLinkServiceImpl implements MemoLinkService {
      */
     @Override
     public MemoLink update(MemoLink memoLink) {
+        User user = UserContext.getUser();
+        memoLink.setLastUpdatedBy(user.getUserId());
+        memoLink.setLastUpdateDate(new Date(System.currentTimeMillis()));
         this.memoLinkDao.update(memoLink);
         return this.queryById(memoLink.getLinkId());
     }

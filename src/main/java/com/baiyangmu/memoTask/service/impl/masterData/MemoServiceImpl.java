@@ -60,7 +60,7 @@ public class MemoServiceImpl implements MemoService {
         User user = UserContext.getUser();
 
         memo.setCreatedBy(user.getUserId());
-        memo.setLastUpdateBy(user.getUserId());
+        memo.setLastUpdatedBy(user.getUserId());
         memo.setCreationDate(new Date(System.currentTimeMillis()));
         memo.setLastUpdateDate(new Date(System.currentTimeMillis()));
         this.memoDao.insert(memo);
@@ -78,7 +78,7 @@ public class MemoServiceImpl implements MemoService {
 
         User user = UserContext.getUser();
 
-        memo.setLastUpdateBy(user.getUserId());
+        memo.setLastUpdatedBy(user.getUserId());
         memo.setLastUpdateDate(new Date(System.currentTimeMillis()));
         this.memoDao.update(memo);
         return this.queryById(memo.getMemoId());

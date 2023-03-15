@@ -54,7 +54,7 @@ public class MemoLinkController {
      * @return 新增结果
      */
     @PostMapping
-    public ResponseEntity<MemoLink> add(MemoLink memoLink) {
+    public ResponseEntity<MemoLink> add(@RequestBody MemoLink memoLink) {
         return ResponseEntity.ok(this.memoLinkService.insert(memoLink));
     }
 
@@ -65,7 +65,7 @@ public class MemoLinkController {
      * @return 编辑结果
      */
     @PutMapping
-    public ResponseEntity<MemoLink> edit(MemoLink memoLink) {
+    public ResponseEntity<MemoLink> edit(@RequestBody MemoLink memoLink) {
         return ResponseEntity.ok(this.memoLinkService.update(memoLink));
     }
 
@@ -75,8 +75,8 @@ public class MemoLinkController {
      * @param id 主键
      * @return 删除是否成功
      */
-    @DeleteMapping
-    public ResponseEntity<Boolean> deleteById(Integer id) {
+    @DeleteMapping("{id}")
+    public ResponseEntity<Boolean> deleteById(@PathVariable("id") Integer id) {
         return ResponseEntity.ok(this.memoLinkService.deleteById(id));
     }
 
