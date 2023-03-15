@@ -1,5 +1,6 @@
 package com.baiyangmu.memotask.filter;
 
+import com.baiyangmu.memotask.config.UserContext;
 import com.baiyangmu.memotask.entity.masterData.User;
 import com.baiyangmu.memotask.service.masterData.UserService;
 import com.baiyangmu.memotask.util.JwtTokenUtil;
@@ -47,41 +48,48 @@ public class JwtTokenFilter extends OncePerRequestFilter {
         }
 
         String jwtToken = requestTokenHeader.substring(7);
-        String email = null;
+        String email = getEmailFromToken(jwtToken, response);
+        if (email == null) {
+            return;
+        }
+
+        String serverToken = getServerToken(email, jwtToken, response);
+        if (serverToken == null) {
+            return;
+        }
+
+        User user = service.findByEmail(email);
+        if (user == null) {
+            response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Invalid token");
+            return;
+        }
+        UserContext.setUser(user);
+        filterChain.doFilter(request, response);
+    }
+
+
+    private String getEmailFromToken(String jwtToken, HttpServletResponse response) throws IOException {
+        String email;
         try {
-             email = jwtTokenUtil.getEmailFromToken(jwtToken);
-            // continue with the request
+            email = jwtTokenUtil.getEmailFromToken(jwtToken);
         } catch (Exception e) {
             logger.error("JWT token validation error", e);
             response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Invalid token");
-            return;
+            return null;
         }
+        return email;
+    }
 
 
-        String serverToken = null;
-
-        if (email == null) {
-            response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Unauthorized");
-            return;
-        }
-        serverToken = (String) redisUtil.get(email);
-
-
+    private String getServerToken(String email, String jwtToken, HttpServletResponse response) throws IOException {
+        String serverToken = (String) redisUtil.get(email);
         if (serverToken == null || !jwtTokenUtil.validateToken(jwtToken, serverToken)) {
             logger.warn("JWT Token validation failed");
             response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Unauthorized");
-            return;
+            return null;
         }
-
-
-        User user = service.findByEmail(email);
-        if (user != null) {
-            request.setAttribute("user", user);
-        }else{
-            response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Invalid token");
-            return;
-        }
-
-        filterChain.doFilter(request, response);
+        return serverToken;
     }
+
+
 }

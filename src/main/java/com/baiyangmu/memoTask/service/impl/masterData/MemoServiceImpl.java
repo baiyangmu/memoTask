@@ -1,17 +1,16 @@
 package com.baiyangmu.memotask.service.impl.masterData;
 
+import com.baiyangmu.memotask.config.UserContext;
 import com.baiyangmu.memotask.dao.masterData.MemoDao;
 import com.baiyangmu.memotask.entity.masterData.Memo;
 import com.baiyangmu.memotask.entity.masterData.User;
 import com.baiyangmu.memotask.service.masterData.MemoService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 
 /**
@@ -24,8 +23,6 @@ import java.util.Date;
 public class MemoServiceImpl implements MemoService {
     @Resource
     private MemoDao memoDao;
-    @Autowired
-    private HttpServletRequest request;
 
     /**
      * 通过ID查询单条数据
@@ -60,7 +57,7 @@ public class MemoServiceImpl implements MemoService {
     @Override
     public Memo insert(Memo memo) {
 
-        User user = (User) request.getAttribute("user");
+        User user = UserContext.getUser();
 
         memo.setCreatedBy(user.getUserId());
         memo.setLastUpdateBy(user.getUserId());
@@ -79,7 +76,7 @@ public class MemoServiceImpl implements MemoService {
     @Override
     public Memo update(Memo memo) {
 
-        User user = (User) request.getAttribute("user");
+        User user = UserContext.getUser();
 
         memo.setLastUpdateBy(user.getUserId());
         memo.setLastUpdateDate(new Date(System.currentTimeMillis()));

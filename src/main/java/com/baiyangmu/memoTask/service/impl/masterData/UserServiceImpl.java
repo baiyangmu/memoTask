@@ -1,6 +1,7 @@
 package com.baiyangmu.memotask.service.impl.masterData;
 
 import com.baiyangmu.memotask.condition.UserQueryCondition;
+import com.baiyangmu.memotask.config.UserContext;
 import com.baiyangmu.memotask.dao.masterData.UserDao;
 import com.baiyangmu.memotask.entity.masterData.User;
 import com.baiyangmu.memotask.mapper.UserConvert;
@@ -182,14 +183,12 @@ public class UserServiceImpl implements UserService {
         String token = null;
         String email = null;
         try {
-            UserVo userVo = (UserVo) request.getAttribute("user");
-            email = userVo.getEmail();
+            email = UserContext.getUser().getEmail();
             token = (String) redisUtil.get(email);
         } catch (Exception e) {
             return Response.buildFailed(500000, "server error");
         }
         if (token != null) {
-
             redisUtil.delete(email);
         }
         return Response.build(null);
